@@ -4,7 +4,7 @@ import urllib2,urllib,sys,argparse
 
 parser =argparse.ArgumentParser()
 parser.add_argument("url", help="Input the url to Spyder")
-parser.add_argument("-o","--output",help="Output the result to a file", action="store_true")
+parser.add_argument("-o","--output",help="Output the result to a file", action="store",dest="out")
 args=parser.parse_args()
 
 
@@ -21,8 +21,8 @@ def main():
 	global i ,f
 	i=0	
 	url=sys.argv[len(sys.argv)-1] #url start
-	if args.output:
-		f=open("OutSpyder.txt","a")
+	if args.out!=None :
+		f=open(args.out,"a")
 		i=1
 	search(url)
 	if i==1:
