@@ -4,6 +4,7 @@ import urllib,sys,argparse,httplib
 
 parser =argparse.ArgumentParser()
 parser.add_argument("url", help="Input the url")
+parser.add_argument("-f","--FileOut",help="Output the result to a file", action="store", dest="outfile")
 parser.parse_args()
 
 HiddenDir= ["/system/", "/manager/","/admin/","/administrator/"]
@@ -23,8 +24,13 @@ def main():
 		i+=1	
 	con.close()	
 
-	for x in found:
-		print x
+	if result.outfile != None:
+		f = open (result.outfile,"a");
+		for x in found:
+			f.write(x)
+	else:
+		for x in found:
+			print x
 
 if __name__=="__main__":
 	main()
