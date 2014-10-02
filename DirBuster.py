@@ -5,7 +5,7 @@ import urllib,sys,argparse,httplib
 parser =argparse.ArgumentParser()
 parser.add_argument("url", help="Input the url")
 parser.add_argument("-f","--FileOut",help="Output the result to a file", action="store", dest="outfile")
-parser.parse_args()
+result=parser.parse_args()
 
 HiddenDir= ["/system/", "/manager/","/admin/","/administrator/"]
 found=[]
