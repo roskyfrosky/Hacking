@@ -9,21 +9,27 @@ parser.add_argument("-f","--FileOut",help="Output the result to a file", action=
 result = parser.parse_args()
 
 found=[]
+
+def req (m,n):
+	con=httplib.HTTPConnection(m)		
+	con.request('GET',n)		
+	res =con.getresponse()
+	if res.status == 200 :
+		found.append(m+n)
+	con.close()	
+
 def main():
 	inp = sys.argv[len(sys.argv)-1]
 	op= open(inp,"r")
+	url = sys.argv[len(sys.argv)-2]
 	for line in op:
-		url = sys.argv[len(sys.argv)-2]
-		con=httplib.HTTPConnection(url)		
-		end=str("/"+line.strip("\n")+"/")
-		con.request('GET',end)		
-		res =con.getresponse()
-		if res.status == 200 :
-			found.append(url+end)				
-	con.close()
-	
+		if line.find(".") < 0:
+			end=str("/"+line.strip("\n")+"/") #For directories
+		else:
+			end = str("/" +line.strip("\n")) #For files		
+		req(url,end)			
 	if result.outfile != None:
-		f = open (result.outfile,"a");
+		f = open (result.outfile,"w");
 		for x in found:
 			f.write(x)
 	else:
@@ -32,3 +38,4 @@ def main():
 
 if __name__=="__main__":
 	main()
+
