@@ -8,14 +8,17 @@ parser.add_argument("-d","--depth",help="depth of spyder",action="store", dest="
 args=parser.parse_args()
 #Default Depth --> 1
 def search(d):
-    content= urllib2.urlopen(d).read()
-    soup= BeautifulSoup(content)
-    for link in soup.find_all('a',href=True): 
-	if "http://" in link['href']:
-		aux1.append("\n"+ link['href']+"\n")  
-	else:  	
-		string= d+ "/"+link['href'] +"\n"
-        	aux1.append(string)
+	try:
+		content= urllib2.urlopen(d).read()
+		soup= BeautifulSoup(content)
+		for link in soup.find_all('a',href=True): 
+			if "http://" in link['href']:
+				aux1.append("\n"+ link['href']+"\n")  
+		else:  	
+			string= d+ "/"+link['href'] +"\n"
+		    	aux1.append(string)
+	except:
+		pass
        
 def main():
     global f ,aux , aux1
@@ -28,11 +31,9 @@ def main():
     #Start the spyder           
     while j > 0 :   
         j-=1
-	print j
         while aux:
 		url1 = aux.pop(0)
 		final.append(url1)
-		print url1
 		search(url1)
 	for i in aux1:
 		if i==None :
